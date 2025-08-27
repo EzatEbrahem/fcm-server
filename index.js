@@ -1,3 +1,4 @@
+require('dotenv').config(); // قراءة environment variables
 const express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
@@ -6,19 +7,19 @@ const { GoogleAuth } = require('google-auth-library');
 const app = express();
 app.use(bodyParser.json());
 
-// Load Service Account info from environment variables
+// Service Account من .env
 const SERVICE_ACCOUNT = {
   type: process.env.TYPE,
   project_id: process.env.PROJECT_ID,
   private_key_id: process.env.PRIVATE_KEY_ID,
-  private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+  private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'), // مهم لتحويل \n لأسطر فعلية
   client_email: process.env.CLIENT_EMAIL,
   client_id: process.env.CLIENT_ID,
   auth_uri: process.env.AUTH_URI,
   token_uri: process.env.TOKEN_URI,
   auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
   client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
-  universe_domain: process.env.UNIVERSE_DOMAIN,
+  universe_domain: process.env.UNIVERSE_DOMAIN
 };
 
 const PROJECT_ID = SERVICE_ACCOUNT.project_id;
@@ -60,7 +61,10 @@ app.post('/send-notification', async (req, res) => {
             token: fcmToken,
             notification: { title, body },
             data: payload || {},
-            android: { priority: 'HIGH', notification: { channel_id: 'high_importance_channel' } },
+            android: {
+              priority: 'HIGH',
+              notification: { channel_id: 'high_importance_channel' }
+            },
           },
         }),
       }
