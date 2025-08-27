@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: fcm-server
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: TYPE
+        sync: false
+      - key: PROJECT_ID
+        sync: false
+      - key: PRIVATE_KEY_ID
+        sync: false
+      - key: PRIVATE_KEY
+        sync: false
+      - key: CLIENT_EMAIL
+        sync: false
+      - key: CLIENT_ID
+        sync: false
+      - key: AUTH_URI
+        sync: false
+      - key: TOKEN_URI
+        sync: false
+      - key: AUTH_PROVIDER_X509_CERT_URL
+        sync: false
+      - key: CLIENT_X509_CERT_URL
+        sync: false
+      - key: UNIVERSE_DOMAIN
+        sync: false
